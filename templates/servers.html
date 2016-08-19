@@ -1,0 +1,30 @@
+{% extends "base.html" %}
+{% block title %}Servers{% endblock %}
+{% block content %}
+    <p class="text-right">
+        <a href="{{ url_for('servers_reload') }}">
+            <span class="glyphicon glyphicon-refresh"></span> Refresh servers
+        </a>
+    </p>
+
+    {% if errors %}
+        {% for error in errors %}
+            <div class="alert alert-danger" role="alert">Error: {{ error }}</div>
+        {% endfor %}
+    {% endif %}
+
+    <ul class="list-group">
+        {% for server in servers %}
+            <li class="list-group-item">
+                <span class="glyphicon glyphicon-hdd"></span>
+                {% if server.conn %}
+                    <a href="{{ url_for('monitor', server_alias=server.alias) }}">{{ server.alias }}</a>
+                    <span class="badge alert-success">&nbsp;</span>
+                {% else %}
+                    {{ server.alias }}
+                    <span class="badge alert-danger">&nbsp;</span>
+                {% endif %}
+            </li>
+        {% endfor %}
+    </ul>
+{% endblock %}

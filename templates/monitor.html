@@ -1,0 +1,35 @@
+{% extends "base.html" %}
+{% block title %}Server Monitor{% endblock %}
+{% block content %}
+    <h3>
+        {{ alias }}
+        <small>gearmand ver. {{ version }}</small>
+    </h3>
+
+    {% if monitor_data %}
+        <table class="table table-striped">
+            <thead>
+            <tr>
+                <th class="col-md-1"></th>
+                <th><strong>Function name</strong></th>
+                <th><strong>Jobs in queue</strong></th>
+                <th><strong>Jobs running</strong></th>
+                <th><strong>Workers registered</strong></th>
+            </tr>
+            </thead>
+            <tbody>
+            {% for row in monitor_data %}
+                <tr>
+                    <td class="col-md-1"><span class="glyphicon glyphicon-tasks">&nbsp;</span></td>
+                    <td>{{ row.function }}</td>
+                    <td>{{ row.queue_jobs }}</td>
+                    <td>{{ row.running_jobs }}</td>
+                    <td>{{ row.workers }}</td>
+                </tr>
+            {% endfor %}
+            </tbody>
+        </table>
+    {% else %}
+        <div class="well">No data</div>
+    {% endif %}
+{% endblock %}
